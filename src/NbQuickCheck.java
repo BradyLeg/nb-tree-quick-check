@@ -4,15 +4,24 @@ import java.util.Map;
 public class NbQuickCheck {
 
   /**
-   * Performs a pre-order traversal of the tree, printing each node on a separate line.
+   * Performs a pre-order traversal of the tree, printing each node on a separate
+   * line.
    * Does nothing if the root is not present in the tree.
    *
    * @param tree the tree represented as a map of parent nodes to child lists
    * @param root the root node to start traversal from
    */
   public static void preOrder(Map<Integer, List<Integer>> tree, int root) {
-    if(!tree.containsKey(root)) {
+    if (!tree.containsKey(root)) {
       return;
+    }
+
+    System.out.println(root);
+
+    List<Integer> childList = tree.get(root);
+
+    for (int child : childList) {
+      preOrder(tree, child);
     }
   }
 
@@ -24,7 +33,21 @@ public class NbQuickCheck {
    * @return the minimum value in the tree or Integer.MAX_VALUE if root is null
    */
   public static int minVal(Node<Integer> root) {
-    return -1;
+    if (root == null) {
+      return Integer.MAX_VALUE;
+    }
+
+    int min = root.value;
+    int childVal = 0;
+
+    for (Node<Integer> child : root.children) {
+      childVal = minVal(child);
+      if (min > childVal) {
+        min = childVal;
+      }
+    }
+
+    return min;
   }
-  
+
 }
